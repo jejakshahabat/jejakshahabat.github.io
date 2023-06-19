@@ -1,106 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-top: 50px;
-      font-size: 36px;
-    }
-
-    .tabs {
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    .tab {
-      display: inline-block;
-      margin: 0 10px;
-      cursor: pointer;
-      font-size: 24px;
-      color: #555;
-      padding: 10px;
-    }
-
-    .tab:hover {
-      color: #333;
-    }
-
-    .content {
-      margin-top: 30px;
-    }
-
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .photo-grid img {
-      width: 100%;
-      height: auto;
-    }
-
-    @media only screen and (max-width: 600px) {
-      h1 {
-        font-size: 28px;
-      }
-
-      .tab {
-        font-size: 20px;
-      }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animal Farm</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <div class="container">
-    <h1>Welcome to the Farm</h1>
+  <header>
+    <nav>
+      <ul class="menu">
+        <li><a href="#sapi">Sapi</a></li>
+        <li><a href="#kambing-domba">Kambing/Domba</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <div class="tabs">
-      <div class="tab" onclick="scrollToSection('sapi')">Sapi</div>
-      <div class="tab" onclick="scrollToSection('kambing')">Kambing/Domba</div>
-    </div>
+  <main>
+    <section id="sapi">
+      <h2>Sapi</h2>
+      <div class="grid-container">
+        <!-- Retrieve photos from Firebase Storage and display here -->
+        <div class="grid-item"><img src="path_to_sapi_image1.jpg" alt="Sapi 1"></div>
+        <div class="grid-item"><img src="path_to_sapi_image2.jpg" alt="Sapi 2"></div>
+        <div class="grid-item"><img src="path_to_sapi_image3.jpg" alt="Sapi 3"></div>
+      </div>
+    </section>
 
-    <div class="content">
-      <section id="sapi">
-        <h2>Sapi Section</h2>
-        <div class="photo-grid">
-          <img src="sapi1.jpg" alt="Sapi 1">
-          <img src="sapi2.jpg" alt="Sapi 2">
-          <img src="sapi3.jpg" alt="Sapi 3">
-        </div>
-      </section>
-
-      <section id="kambing">
-        <h2>Kambing/Domba Section</h2>
-        <div class="photo-grid">
-          <img src="kambing1.jpg" alt="Kambing 1">
-          <img src="kambing2.jpg" alt="Kambing 2">
-          <img src="kambing3.jpg" alt="Kambing 3">
-        </div>
-      </section>
-    </div>
-  </div>
+    <section id="kambing-domba">
+      <h2>Kambing/Domba</h2>
+      <div class="grid-container">
+        <!-- Retrieve photos from Firebase Storage and display here -->
+        <div class="grid-item"><img src="path_to_kambing_image1.jpg" alt="Kambing 1"></div>
+        <div class="grid-item"><img src="path_to_kambing_image2.jpg" alt="Kambing 2"></div>
+        <div class="grid-item"><img src="path_to_domba_image1.jpg" alt="Domba 1"></div>
+      </div>
+    </section>
+  </main>
 
   <script>
-    function scrollToSection(sectionId) {
-      const section = document.getElementById(sectionId);
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Smooth scroll to section when clicking on menu items
+    const menuItems = document.querySelectorAll('.menu a[href^="#"]');
+    menuItems.forEach(item => {
+      item.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(item.getAttribute('href'));
+        window.scrollTo({
+          top: target.offsetTop,
+          behavior: 'smooth'
+        });
+      });
+    });
   </script>
 </body>
+
 </html>
