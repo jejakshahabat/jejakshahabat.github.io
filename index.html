@@ -12,35 +12,63 @@
   <header>
     <nav>
       <ul class="menu">
-        <li><a href="#sapi">Sapi</a></li>
         <li><a href="#kambing-domba">Kambing/Domba</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <section id="sapi">
-      <h2>Sapi</h2>
-      <div class="grid-container">
-        <!-- Retrieve photos from Firebase Storage and display here -->
-        <div class="grid-item"><img src="path_to_sapi_image1.jpg" alt="Sapi 1"></div>
-        <div class="grid-item"><img src="path_to_sapi_image2.jpg" alt="Sapi 2"></div>
-        <div class="grid-item"><img src="path_to_sapi_image3.jpg" alt="Sapi 3"></div>
-      </div>
-    </section>
-
     <section id="kambing-domba">
       <h2>Kambing/Domba</h2>
       <div class="grid-container">
         <!-- Retrieve photos from Firebase Storage and display here -->
-        <div class="grid-item"><img src="path_to_kambing_image1.jpg" alt="Kambing 1"></div>
-        <div class="grid-item"><img src="path_to_kambing_image2.jpg" alt="Kambing 2"></div>
-        <div class="grid-item"><img src="path_to_domba_image1.jpg" alt="Domba 1"></div>
+        <div class="grid-item"><img src="https://firebasestorage.googleapis.com/v0/b/jejakshahabat-apps.appspot.com/o/kambing%2Fa01.jpeg?alt=media&token=b7cc9d9f-5098-4ae0-adce-9c5410a7f3a4"></div>
+        <div class="grid-item"><img src="https://firebasestorage.googleapis.com/v0/b/jejakshahabat-apps.appspot.com/o/kambing%2Fsp09.jpeg?alt=media&token=b7cc9d9f-5098-4ae0-adce-9c5410a7f3a4"></div>
       </div>
     </section>
   </main>
 
+  <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-storage.js"></script>
   <script>
+    // Initialize Firebase with your Firebase project's configuration
+    const firebaseConfig = {
+      storageBucket: '[jejakshahabat-apps.appspot.com]'
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    // Retrieve and display photos from Firebase Storage
+    function displayPhotos(containerId, folderPath) {
+      const container = document.getElementById(containerId);
+      const storageRef = storage.ref(folderPath);
+
+      storageRef.listAll()
+        .then(res => {
+          res.items.forEach(itemRef => {
+            itemRef.getDownloadURL()
+              .then(url => {
+                const imgContainer = document.createElement('div');
+                imgContainer.class = "grid-item";
+                container.appendChild(imgContainer);
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = itemRef.name;
+                imgContainer.appendChild(img);
+              })
+              .catch(error => {
+                console.log('Error getting download URL:', error);
+              });
+          });
+        })
+        .catch(error => {
+          console.log('Error retrieving images from Firebase Storage:', error);
+        });
+    }
+    
+    displayPhotos('kambingDombaGrid', 'kambing');
+
     // Smooth scroll to section when clicking on menu items
     const menuItems = document.querySelectorAll('.menu a[href^="#"]');
     menuItems.forEach(item => {
