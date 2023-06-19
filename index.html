@@ -1,28 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Landing Page</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 36px;
+    }
+
+    .tabs {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .tab {
+      display: inline-block;
+      margin: 0 10px;
+      cursor: pointer;
+      font-size: 24px;
+      color: #555;
+      padding: 10px;
+    }
+
+    .tab:hover {
+      color: #333;
+    }
+
+    .content {
+      margin-top: 30px;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      height: auto;
+    }
+
+    @media only screen and (max-width: 600px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      .tab {
+        font-size: 20px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="#sapi-kambing-domba">Sapi & Kambing/Domba</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div class="container">
+    <h1>Welcome to the Farm</h1>
 
-  <section id="sapi-kambing-domba">
-    <h2>Sapi & Kambing/Domba</h2>
-    <p>This is the content for the Sapi & Kambing/Domba section.</p>
-  </section>
+    <div class="tabs">
+      <div class="tab" onclick="scrollToSection('sapi')">Sapi</div>
+      <div class="tab" onclick="scrollToSection('kambing')">Kambing/Domba</div>
+    </div>
 
-  <script src="script.js"></script>
+    <div class="content">
+      <section id="sapi">
+        <h2>Sapi Section</h2>
+        <div class="photo-grid">
+          <img src="sapi1.jpg" alt="Sapi 1">
+          <img src="sapi2.jpg" alt="Sapi 2">
+          <img src="sapi3.jpg" alt="Sapi 3">
+        </div>
+      </section>
+
+      <section id="kambing">
+        <h2>Kambing/Domba Section</h2>
+        <div class="photo-grid">
+          <img src="kambing1.jpg" alt="Kambing 1">
+          <img src="kambing2.jpg" alt="Kambing 2">
+          <img src="kambing3.jpg" alt="Kambing 3">
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
 </body>
-
 </html>
