@@ -1,29 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <style>
-    iframe {
-      height: 100vh;
-      width: 100vw
-    }
-
-    iframe::-webkit-scrollbar {
-      display: none;
-    }
-  </style>
-
-  <title>اَلسَّلَامُ عَلَيْكُمْ</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animal Farm</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <h1>Our Company Profile</h1>
-  <iframe
-    src="https://firebasestorage.googleapis.com/v0/b/jejakshahabatcare-bd4fd.appspot.com/o/Company%20Profile%20Fix.pdf?alt=media&amp;token=c016ec18-db0d-412a-b157-9996e5d27a88"
-    width="100%" height="100%">
-  </iframe>
+  <header>
+    <nav>
+      <ul class="menu">
+        <li><a href="#kambing-domba">Kambing/Domba</a></li>
+      </ul>
+    </nav>
+  </header>
 
+  <main>
+    <section id="kambing-domba">
+      <h2>Kambing/Domba</h2>
+      <div class="grid-container" id="kambingDombaGrid">
+      </div>
+    </section>
+  </main>
 
+  <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-storage.js"></script>
+  <script>
+    // Initialize Firebase with your Firebase project's configuration
+    const firebaseConfig = {
+      storageBucket: '[jejakshahabat-apps.appspot.com]'
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    // Retrieve and display photos from Firebase Storage
+    function displayPhotos(containerId, folderPath) {
+      const container = document.getElementById(containerId);
+      const storageRef = storage.ref(folderPath);
+
+      storageRef.listAll()
+        .then(res => {
+          res.items.forEach(itemRef => {
+            itemRef.getDownloadURL()
+              .then(url => {
+                const imgContainer = document.createElement('div');
+                imgContainer.class = "grid-item";
+                container.appendChild(imgContainer);
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = itemRef.name;
+                imgContainer.appendChild(img);
+              })
+              .catch(error => {
+                console.log('Error getting download URL:', error);
+              });
+          });
+        })
+        .catch(error => {
+          console.log('Error retrieving images from Firebase Storage:', error);
+        });
+    }
+    
+    displayPhotos('kambingDombaGrid', 'kambing');
+
+    // Smooth scroll to section when clicking on menu items
+    const menuItems = document.querySelectorAll('.menu a[href^="#"]');
+    menuItems.forEach(item => {
+      item.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(item.getAttribute('href'));
+        window.scrollTo({
+          top: target.offsetTop,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
